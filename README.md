@@ -165,6 +165,28 @@ pytest src/test_agents.py -v
 
 Benchmark cần in ra hai bảng: **Standard Benchmark** và **Long-Context Stress Benchmark**. Mỗi bảng so sánh Baseline với Advanced theo đủ 6 cột trong phần "Chỉ số benchmark cần hiểu".
 
+## Kết quả Thực nghiệm & Báo cáo Đánh giá
+
+Xem báo cáo chi tiết đầy đủ tại file **[REPORT.md](REPORT.md)**.
+
+### 1. Standard Benchmark (`data/conversations.json`)
+| Agent | Agent tokens only | Prompt tokens processed | Cross-session recall | Response quality | Memory growth (bytes) | Compactions |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Baseline Agent** | 2,124 | 16,641 | **0.0%** | 20.0% | 0 B | 0 |
+| **Advanced Agent** | 2,076 | 26,598 | **100.0%** | **100.0%** | 307 B | 0 |
+
+### 2. Long-Context Stress Benchmark (`data/advanced_long_context.json`)
+| Agent | Agent tokens only | Prompt tokens processed | Cross-session recall | Response quality | Memory growth (bytes) | Compactions |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Baseline Agent** | 342 | 22,672 | **0.0%** | 20.0% | 0 B | 0 |
+| **Advanced Agent** | 578 | **11,418** *(giảm 49.6%)* | **100.0%** | **100.0%** | 243 B | **8** |
+
+### Kết quả Kiểm thử (Unit Tests)
+```bash
+pytest src/test_agents.py -v
+# 4 passed in ~3.3s (100% pass)
+```
+
 ## Cách dùng repo này
 
 Nếu các bạn là sinh viên:
@@ -175,9 +197,11 @@ Nếu các bạn là sinh viên:
 Nếu các bạn là giảng viên hoặc reviewer:
 
 - dùng `src/` để đánh giá scaffold giao cho sinh viên và kết quả hoàn thiện cuối cùng
+- xem báo cáo chi tiết tại [REPORT.md](REPORT.md)
 
 ## Tài liệu nên đọc tiếp
 
+- `REPORT.md`: báo cáo phân tích chi tiết, giải thích trade-off và tính năng bonus
 - `Guide.md`: hướng dẫn từng bước để hoàn thành lab
 - `Rubric.md`: tiêu chí chấm điểm và bonus
 
